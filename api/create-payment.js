@@ -15,10 +15,13 @@ async function getSheet() {
   return doc.sheetsByIndex[0];
 }
 
+function generateSignature(fields, secretKey) {
+  const signString = fields.join(';');
+  return crypto.createHmac('md5', secretKey).update(signString).digest('hex');
+}
+
 module.exports = async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  if (req.method !== 'POST') return res.status(405).end();
 
   const { name, phone, email, ticketType, amount } = req.body;
 
@@ -26,15 +29,22 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
-  const publicKey = process.env.LIQPAY_PUBLIC_KEY;
-  const privateKey = process.env.LIQPAY_PRIVATE_KEY;
-  const order_id = nanoid();
+  const orderReference = nanoid();
+  const orderDate = Math.floor(Date.now() / 1000).toString();
+
+  const merchantAccount = process.env.WAYFORPAY_MERCHANT_ACCOUNT;
+  const merchantDomainName = process.env.WAYFORPAY_MERCHANT_DOMAIN;
+  const secretKey = process.env.WAYFORPAY_MERCHANT_SECRET_KEY;
+  const productName = `Квиток ${ticketType} — Fashion West Ukraine 2026`;
+  const productCount = '1';
+  const productPrice = amount.toString();
+  const amountStr = amount.toString();
 
   // Write pending row to Google Sheets
   try {
     const sheet = await getSheet();
     await sheet.addRow({
-      'Order ID': order_id,
+      'Order ID': orderReference,
       'Event': 'Fashion West Ukraine 2026',
       'Category': ticketType,
       'Full Name': name,
@@ -51,24 +61,44 @@ module.exports = async function handler(req, res) {
     return res.status(500).json({ error: 'Failed to record order' });
   }
 
-  // Build LiqPay params
-  const params = {
-    version: 3,
-    public_key: publicKey,
-    action: 'pay',
-    amount: String(amount),
+  // Build WayForPay signature
+  // Signature fields order per WayForPay docs
+  const nameParts = name.trim().split(/\s+/);
+  const clientFirstName = nameParts[0] || name;
+  const clientLastName = nameParts[1] || '';
+
+  const merchantSignature = generateSignature(
+    [
+      merchantAccount,
+      merchantDomainName,
+      orderReference,
+      orderDate,
+      amountStr,
+      'UAH',
+      productName,
+      productCount,
+      productPrice,
+    ],
+    secretKey
+  );
+
+  return res.status(200).json({
+    merchantAccount,
+    merchantDomainName,
+    orderReference,
+    orderDate,
+    amount: amountStr,
     currency: 'UAH',
-    description: `Ticket ${ticketType}`,
-    order_id,
-    result_url: 'https://fashionwest.vercel.app/success',
-    server_url: 'https://fashionwest.vercel.app/api/liqpay-webhook',
-  };
-
-  const data = Buffer.from(JSON.stringify(params)).toString('base64');
-  const signature = crypto
-    .createHash('sha1')
-    .update(privateKey + data + privateKey)
-    .digest('base64');
-
-  return res.status(200).json({ data, signature });
+    productName,
+    productCount,
+    productPrice,
+    clientFirstName,
+    clientLastName,
+    clientEmail: email,
+    clientPhone: phone,
+    serviceUrl: `https://${merchantDomainName}/api/wayforpay-webhook`,
+    returnUrl: `https://${merchantDomainName}/success`,
+    merchantSignature,
+    language: 'UA',
+  });
 };
