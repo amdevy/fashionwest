@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
 import HeroSection from '../components/HeroSection';
 import TicketCard from '../components/TicketCard';
 import ProgramSection from '../components/ProgramSection';
@@ -62,6 +63,7 @@ export default function Landing() {
 
   return (
     <main>
+      <Header />
       <HeroSection />
 
       <ProgramSection />
