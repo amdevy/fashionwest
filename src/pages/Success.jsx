@@ -9,25 +9,24 @@ export default function Success() {
         </div>
 
         <h1 className="font-heading uppercase tracking-[0.2em] text-forest text-3xl md:text-4xl">
-          Payment Confirmed
+          Оплата пройшла успішно!
         </h1>
 
         <div className="w-12 h-px bg-sage" />
 
         <p className="font-body text-sage text-sm leading-relaxed">
-          Thank you for your purchase. Your QR ticket has been sent to your email address.
-          Please present it at the entrance on the day of the event.
+          Перевірте пошту — ваш QR-квиток вже там.
         </p>
 
         <p className="font-body text-forest/60 text-xs uppercase tracking-widest mt-2">
-          Check your inbox (and spam folder)
+          Перевірте папку «Спам», якщо листа немає у вхідних
         </p>
 
         <Link
           to="/"
           className="mt-6 border border-burgundy text-burgundy uppercase tracking-widest text-xs px-8 py-3 hover:bg-burgundy hover:text-white transition-colors duration-300"
         >
-          Back to Home
+          ← Повернутись на головну
         </Link>
       </div>
     </main>
