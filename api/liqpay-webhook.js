@@ -8,7 +8,7 @@ const { GoogleSpreadsheet } = require('google-spreadsheet');
 const { JWT } = require('google-auth-library');
 
 async function getSheet() {
-  const creds = JSON.parse(process.env.GOOGLE_CREDENTIALS.replace(/\\n/g, '\n'));
+  const creds = JSON.parse(process.env.GOOGLE_CREDENTIALS);
   const auth = new JWT({
     email: creds.client_email,
     key: creds.private_key,
@@ -85,7 +85,7 @@ module.exports = async function handler(req, res) {
     const ticketCode = generate(ALPHABET, 8);
 
     // Generate QR code as buffer
-    const qrBuffer = await QRCode.toBuffer(ticketCode);
+    const qrBuffer = await QRCode.toBuffer(ticketCode, { width: 400, margin: 2 });
 
     // Update sheet row
     row.set('Status', 'paid');

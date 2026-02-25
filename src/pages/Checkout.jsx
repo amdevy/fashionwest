@@ -38,10 +38,10 @@ export default function Checkout() {
   }
 
   const onSubmit = async (data) => {
+    // TODO: remove mock and restore payment flow
     setLoading(true);
-    setError(null);
     try {
-      const res = await fetch('/api/create-payment', {
+      await fetch('/api/mock-fulfill', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -52,16 +52,37 @@ export default function Checkout() {
           amount: price,
         }),
       });
-
-      if (!res.ok) throw new Error('Payment initialization failed');
-
-      const { data: liqpayData, signature } = await res.json();
-      navigate('/payment', { state: { data: liqpayData, signature } });
     } catch (err) {
-      setError('Something went wrong. Please try again.');
+      console.error('mock-fulfill failed:', err);
     } finally {
       setLoading(false);
     }
+    navigate('/success');
+
+    // setLoading(true);
+    // setError(null);
+    // try {
+    //   const res = await fetch('/api/create-payment', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({
+    //       name: data.name,
+    //       phone: data.phone,
+    //       email: data.email,
+    //       ticketType: label,
+    //       amount: price,
+    //     }),
+    //   });
+
+    //   if (!res.ok) throw new Error('Payment initialization failed');
+
+    //   const { data: liqpayData, signature } = await res.json();
+    //   navigate('/payment', { state: { data: liqpayData, signature } });
+    // } catch (err) {
+    //   setError('Something went wrong. Please try again.');
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   return (

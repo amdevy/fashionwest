@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 .env
 fashion-west-a998c206f20c.json
+.vercel
+.env*.local

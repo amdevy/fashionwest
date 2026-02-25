@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD;
 
@@ -9,6 +9,7 @@ export default function AdminScan() {
 
   const [scanning, setScanning] = useState(false);
   const [result, setResult] = useState(null);
+  const [stats, setStats] = useState(null);
   const scannerRef = useRef(null);
   const html5QrCodeRef = useRef(null);
 
@@ -22,6 +23,22 @@ export default function AdminScan() {
     }
   };
 
+  const fetchStats = useCallback(async () => {
+    try {
+      const res = await fetch('/api/stats');
+      if (res.ok) setStats(await res.json());
+    } catch {}
+  }, []);
+
+  // Load stats on unlock, refresh every 15s
+  useEffect(() => {
+    if (!unlocked) return;
+    fetchStats();
+    const interval = setInterval(fetchStats, 15000);
+    return () => clearInterval(interval);
+  }, [unlocked, fetchStats]);
+
+  // Start QR scanner
   useEffect(() => {
     if (!unlocked) return;
 
@@ -63,6 +80,7 @@ export default function AdminScan() {
       });
       const data = await res.json();
       setResult(data);
+      if (data.status === 'success') fetchStats();
     } catch {
       setResult({ status: 'error' });
     }
@@ -78,35 +96,15 @@ export default function AdminScan() {
 
     switch (result.status) {
       case 'success':
-        return {
-          color: 'text-white',
-          label: 'ENTRY ALLOWED',
-          detail: `${result.name} / ${result.category}`,
-        };
+        return { color: 'text-white', label: 'ENTRY ALLOWED', detail: `${result.name} / ${result.category}` };
       case 'already_used':
-        return {
-          color: 'text-beige',
-          label: 'ALREADY USED',
-          detail: `at ${result.time}`,
-        };
+        return { color: 'text-beige', label: 'ALREADY USED', detail: `at ${result.time}` };
       case 'not_paid':
-        return {
-          color: 'text-burgundy',
-          label: 'NOT PAID',
-          detail: 'Ticket not paid',
-        };
+        return { color: 'text-burgundy', label: 'NOT PAID', detail: 'Ticket not paid' };
       case 'not_found':
-        return {
-          color: 'text-burgundy',
-          label: 'NOT FOUND',
-          detail: 'Ticket does not exist',
-        };
+        return { color: 'text-burgundy', label: 'NOT FOUND', detail: 'Ticket does not exist' };
       default:
-        return {
-          color: 'text-burgundy',
-          label: 'ERROR',
-          detail: 'Try again',
-        };
+        return { color: 'text-burgundy', label: 'ERROR', detail: 'Try again' };
     }
   };
 
@@ -147,9 +145,29 @@ export default function AdminScan() {
 
   return (
     <main className="min-h-screen bg-forest flex flex-col items-center justify-center px-6 py-12">
-      <h1 className="font-heading uppercase tracking-[0.2em] text-white text-xl mb-8">
+      <h1 className="font-heading uppercase tracking-[0.2em] text-white text-xl mb-6">
         Ticket Scanner
       </h1>
+
+      {/* Stats */}
+      {stats !== null && (
+        <div className="flex gap-8 mb-8 border border-white/10 px-8 py-4">
+          <div className="text-center">
+            <p className="font-heading text-white text-3xl">{stats.checkedIn}</p>
+            <p className="font-body text-white/40 text-xs uppercase tracking-widest mt-1">Entered</p>
+          </div>
+          <div className="w-px bg-white/10" />
+          <div className="text-center">
+            <p className="font-heading text-white text-3xl">{stats.remaining}</p>
+            <p className="font-body text-white/40 text-xs uppercase tracking-widest mt-1">Remaining</p>
+          </div>
+          <div className="w-px bg-white/10" />
+          <div className="text-center">
+            <p className="font-heading text-white text-3xl">{stats.total}</p>
+            <p className="font-body text-white/40 text-xs uppercase tracking-widest mt-1">Total Sold</p>
+          </div>
+        </div>
+      )}
 
       <div
         id="qr-reader"

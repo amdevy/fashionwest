@@ -1,10 +1,10 @@
 const crypto = require('crypto');
-const { nanoid } = require('nanoid');
+const nanoid = require('nanoid');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const { JWT } = require('google-auth-library');
 
 async function getSheet() {
-  const creds = JSON.parse(process.env.GOOGLE_CREDENTIALS.replace(/\\n/g, '\n'));
+  const creds = JSON.parse(process.env.GOOGLE_CREDENTIALS);
   const auth = new JWT({
     email: creds.client_email,
     key: creds.private_key,
