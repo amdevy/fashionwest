@@ -35,7 +35,7 @@ export default function TicketCard({ type, title, price, description, features, 
         onClick={onBuy}
         className="mt-auto bg-burgundy text-white uppercase tracking-widest text-xs px-8 py-3 hover:bg-forest transition-colors duration-300 w-full"
       >
-        Buy Ticket
+        Придбати квиток
       </button>
     </div>
   );

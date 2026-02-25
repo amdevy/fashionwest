@@ -3,9 +3,9 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 
 const TICKET_PRICES = {
-  standard: 500,
-  comfort: 900,
-  vip: 1500,
+  standard: 2000,
+  comfort: 4000,
+  vip: 6000,
 };
 
 const TICKET_LABELS = {
@@ -79,7 +79,7 @@ export default function Checkout() {
     //   const { data: liqpayData, signature } = await res.json();
     //   navigate('/payment', { state: { data: liqpayData, signature } });
     // } catch (err) {
-    //   setError('Something went wrong. Please try again.');
+    //   setError('Щось пішло не так. Спробуйте ще раз.');
     // } finally {
     //   setLoading(false);
     // }
@@ -92,18 +92,18 @@ export default function Checkout() {
           to="/"
           className="font-body text-sage text-xs uppercase tracking-widest hover:text-forest transition-colors block mb-10"
         >
-          &larr; Back
+          &larr; Назад
         </Link>
 
         <div className="mb-10">
           <p className="font-body text-sage text-xs uppercase tracking-widest mb-2">
-            {ticketType} ticket
+            {ticketType} квиток
           </p>
           <h1 className="font-heading uppercase tracking-[0.15em] text-forest text-3xl">
-            {label}
+            Придбати квиток
           </h1>
           <p className="font-heading text-2xl text-burgundy mt-3">
-            {price} <span className="text-sm font-body text-sage">UAH</span>
+            {price} <span className="text-sm font-body text-sage">грн</span>
           </p>
         </div>
 
@@ -111,9 +111,9 @@ export default function Checkout() {
           <div>
             <input
               type="text"
-              placeholder="Full Name"
+              placeholder="Повне ім'я"
               className="w-full border-b border-[#848d7f] bg-transparent py-3 text-sm font-body text-forest placeholder-sage focus:outline-none focus:border-burgundy transition-colors"
-              {...register('name', { required: 'Name is required' })}
+              {...register('name', { required: "Введіть ім'я" })}
             />
             {errors.name && (
               <p className="font-body text-burgundy text-xs mt-1">{errors.name.message}</p>
@@ -123,9 +123,9 @@ export default function Checkout() {
           <div>
             <input
               type="tel"
-              placeholder="Phone Number"
+              placeholder="Номер телефону"
               className="w-full border-b border-[#848d7f] bg-transparent py-3 text-sm font-body text-forest placeholder-sage focus:outline-none focus:border-burgundy transition-colors"
-              {...register('phone', { required: 'Phone is required' })}
+              {...register('phone', { required: 'Введіть номер телефону' })}
             />
             {errors.phone && (
               <p className="font-body text-burgundy text-xs mt-1">{errors.phone.message}</p>
@@ -135,11 +135,11 @@ export default function Checkout() {
           <div>
             <input
               type="email"
-              placeholder="Email Address"
+              placeholder="Email"
               className="w-full border-b border-[#848d7f] bg-transparent py-3 text-sm font-body text-forest placeholder-sage focus:outline-none focus:border-burgundy transition-colors"
               {...register('email', {
-                required: 'Email is required',
-                pattern: { value: /^\S+@\S+\.\S+$/, message: 'Invalid email address' },
+                required: 'Введіть email',
+                pattern: { value: /^\S+@\S+\.\S+$/, message: 'Невірний формат email' },
               })}
             />
             {errors.email && (
@@ -156,7 +156,7 @@ export default function Checkout() {
             disabled={loading}
             className="mt-4 bg-burgundy text-white uppercase tracking-widest text-xs px-8 py-4 hover:bg-forest transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Processing...' : 'Proceed to Payment'}
+            {loading ? 'Обробка...' : 'Перейти до оплати'}
           </button>
         </form>
       </div>

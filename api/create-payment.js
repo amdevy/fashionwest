@@ -35,7 +35,7 @@ module.exports = async function handler(req, res) {
     const sheet = await getSheet();
     await sheet.addRow({
       'Order ID': order_id,
-      'Event': 'Event Name',
+      'Event': 'Fashion West Ukraine 2026',
       'Category': ticketType,
       'Full Name': name,
       'Phone': phone,
