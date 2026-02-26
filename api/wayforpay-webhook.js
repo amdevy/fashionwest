@@ -67,6 +67,8 @@ module.exports = async function handler(req, res) {
 
       if (!row) {
         console.error('Order not found:', payload.orderReference);
+      } else if (row['Status'] === 'paid') {
+        console.log('[webhook] already processed, skipping:', payload.orderReference);
       } else {
         // Generate ticket code and QR
         const ticketCode = generate(ALPHABET, 8);
