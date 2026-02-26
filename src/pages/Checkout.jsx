@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 
 const TICKET_PRICES = {
-  standard: 1,
+  standard: 2000,
   comfort: 4000,
   vip: 6000,
 };
