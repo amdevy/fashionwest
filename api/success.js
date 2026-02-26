@@ -1,4 +1,3 @@
-const getRawBody = require('raw-body');
 const qs = require('querystring');
 const QRCode = require('qrcode');
 const generate = require('nanoid/generate');
@@ -18,12 +17,27 @@ async function getSheet() {
   return doc.sheetsByIndex[0];
 }
 
+function parseBody(req) {
+  return new Promise((resolve) => {
+    if (req.body && typeof req.body === 'object') {
+      return resolve(req.body);
+    }
+    if (req.body && typeof req.body === 'string') {
+      return resolve(qs.parse(req.body));
+    }
+    let data = '';
+    req.on('data', chunk => { data += chunk; });
+    req.on('end', () => resolve(qs.parse(data)));
+  });
+}
+
 async function handler(req, res) {
   if (req.method === 'POST') {
     try {
-      const rawBody = await getRawBody(req);
-      const body = qs.parse(rawBody.toString());
+      const body = await parseBody(req);
       const { orderReference, transactionStatus } = body;
+
+      console.log('[success] body:', JSON.stringify(body));
 
       if (transactionStatus === 'Approved' && orderReference) {
         const sheet = await getSheet();
