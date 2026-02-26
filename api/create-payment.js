@@ -1,16 +1,14 @@
 const crypto = require('crypto');
 const nanoid = require('nanoid');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
-const { JWT } = require('google-auth-library');
 
 async function getSheet() {
   const creds = JSON.parse(process.env.GOOGLE_CREDENTIALS);
-  const auth = new JWT({
-    email: creds.client_email,
-    key: creds.private_key,
-    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
+  await doc.useServiceAccountAuth({
+    client_email: creds.client_email,
+    private_key: creds.private_key,
   });
-  const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID, auth);
   await doc.loadInfo();
   return doc.sheetsByIndex[0];
 }

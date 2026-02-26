@@ -4,18 +4,16 @@ const QRCode = require('qrcode');
 const generate = require('nanoid/generate');
 const { Resend } = require('resend');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
-const { JWT } = require('google-auth-library');
 
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
 async function getSheet() {
   const creds = JSON.parse(process.env.GOOGLE_CREDENTIALS);
-  const auth = new JWT({
-    email: creds.client_email,
-    key: creds.private_key,
-    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
+  await doc.useServiceAccountAuth({
+    client_email: creds.client_email,
+    private_key: creds.private_key,
   });
-  const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID, auth);
   await doc.loadInfo();
   return doc.sheetsByIndex[0];
 }
@@ -65,7 +63,7 @@ module.exports = async function handler(req, res) {
     try {
       const sheet = await getSheet();
       const rows = await sheet.getRows();
-      const row = rows.find((r) => r.get('Order ID') === payload.orderReference);
+      const row = rows.find((r) => r['Order ID'] === payload.orderReference);
 
       if (!row) {
         console.error('Order not found:', payload.orderReference);
@@ -75,20 +73,20 @@ module.exports = async function handler(req, res) {
         const qrBuffer = await QRCode.toBuffer(ticketCode, { width: 400, margin: 2 });
 
         // Update row
-        row.set('Status', 'paid');
-        row.set('Ticket Code', ticketCode);
-        row.set('Payment Date', new Date().toLocaleString('uk-UA'));
+        row['Status'] = 'paid';
+        row['Ticket Code'] = ticketCode;
+        row['Payment Date'] = new Date().toLocaleString('uk-UA');
         await row.save();
 
         // Send email
         const resend = new Resend(process.env.RESEND_API_KEY);
         await resend.emails.send({
           from: process.env.RESEND_FROM_EMAIL,
-          to: row.get('Email'),
+          to: row['Email'],
           subject: 'Ваш квиток Fashion West Ukraine 2026',
           html: `
-            <p>Вітаємо, ${row.get('Full Name')}!</p>
-            <p>Ваш квиток категорії <strong>${row.get('Category')}</strong> підтверджено.</p>
+            <p>Вітаємо, ${row['Full Name']}!</p>
+            <p>Ваш квиток категорії <strong>${row['Category']}</strong> підтверджено.</p>
             <p>Код квитка: <strong>${ticketCode}</strong></p>
             <p>Пред'явіть QR-код на вході у день події.</p>
             <p>До зустрічі 2 травня в Darlin', Мукачево!</p>
