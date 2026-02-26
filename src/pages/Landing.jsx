@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import HeroSection from '../components/HeroSection';
 import TicketCard from '../components/TicketCard';
 import ProgramSection from '../components/ProgramSection';
+import Speakers from '../components/Speakers';
 import AboutSection from '../components/AboutSection';
 import Footer from '../components/Footer';
 
@@ -67,6 +68,8 @@ export default function Landing() {
       <HeroSection />
 
       <ProgramSection />
+
+      <Speakers />
 
       <section id="tickets" className="bg-off-white px-6 py-24">
         <div className="max-w-6xl mx-auto">
