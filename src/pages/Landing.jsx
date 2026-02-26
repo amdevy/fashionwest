@@ -11,7 +11,7 @@ const TICKETS = [
   {
     type: 'Standard',
     title: 'Standard Entry',
-    price: 1,
+    price: 2000,
     description:
       'Ідеальний формат, щоб стати частиною атмосфери події та побачити все на власні очі.',
     features: [
