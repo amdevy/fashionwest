@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import HeroSection from '../components/HeroSection';
 import TicketCard from '../components/TicketCard';
 import ProgramSection from '../components/ProgramSection';
+import Speakers from '../components/Speakers';
 import AboutSection from '../components/AboutSection';
 import Footer from '../components/Footer';
 
@@ -10,8 +11,9 @@ const TICKETS = [
   {
     type: 'Standard',
     title: 'Standard Entry',
-    price: 2000,
-    description: 'Ідеальний формат, щоб стати частиною атмосфери події та побачити все на власні очі.',
+    price: 1,
+    description:
+      'Ідеальний формат, щоб стати частиною атмосфери події та побачити все на власні очі.',
     features: [
       'Місця в глядацькій зоні',
       'Welcome drink',
@@ -41,7 +43,8 @@ const TICKETS = [
     type: 'VIP',
     title: 'VIP Entry',
     price: 6000,
-    description: 'Максимальний рівень доступу та привілеїв. Близькість до подіуму, особлива атмосфера та закриті можливості.',
+    description:
+      'Максимальний рівень доступу та привілеїв. Близькість до подіуму, особлива атмосфера та закриті можливості.',
     features: [
       'VIP місця біля подіуму',
       'Welcome drink',
@@ -67,6 +70,8 @@ export default function Landing() {
       <HeroSection />
 
       <ProgramSection />
+
+      <Speakers />
 
       <section id="tickets" className="bg-off-white px-6 py-24">
         <div className="max-w-6xl mx-auto">
