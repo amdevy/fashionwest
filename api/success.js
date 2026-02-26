@@ -1,3 +1,5 @@
+const getRawBody = require('raw-body');
+const qs = require('querystring');
 const QRCode = require('qrcode');
 const generate = require('nanoid/generate');
 const { Resend } = require('resend');
@@ -16,10 +18,12 @@ async function getSheet() {
   return doc.sheetsByIndex[0];
 }
 
-module.exports = async function handler(req, res) {
+async function handler(req, res) {
   if (req.method === 'POST') {
     try {
-      const { orderReference, transactionStatus } = req.body;
+      const rawBody = await getRawBody(req);
+      const body = qs.parse(rawBody.toString());
+      const { orderReference, transactionStatus } = body;
 
       if (transactionStatus === 'Approved' && orderReference) {
         const sheet = await getSheet();
@@ -57,4 +61,7 @@ module.exports = async function handler(req, res) {
   }
 
   res.redirect(302, '/success');
-};
+}
+
+handler.config = { api: { bodyParser: false } };
+module.exports = handler;
