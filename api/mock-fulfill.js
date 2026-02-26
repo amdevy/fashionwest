@@ -1,19 +1,17 @@
-// DEV ONLY — simulates the webhook flow without a real LiqPay payment
+// DEV ONLY — simulates the webhook flow without a real WayForPay payment
 const QRCode = require('qrcode');
 const generate = require('nanoid/generate');
 const nanoid = require('nanoid');
 const { Resend } = require('resend');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
-const { JWT } = require('google-auth-library');
 
 async function getSheet() {
   const creds = JSON.parse(process.env.GOOGLE_CREDENTIALS);
-  const auth = new JWT({
-    email: creds.client_email,
-    key: creds.private_key,
-    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID);
+  await doc.useServiceAccountAuth({
+    client_email: creds.client_email,
+    private_key: creds.private_key,
   });
-  const doc = new GoogleSpreadsheet(process.env.GOOGLE_SHEET_ID, auth);
   await doc.loadInfo();
   return doc.sheetsByIndex[0];
 }
@@ -41,7 +39,7 @@ module.exports = async function handler(req, res) {
     const sheet = await getSheet();
     await sheet.addRow({
       'Order ID': order_id,
-      'Event': 'Event Name',
+      'Event': 'Fashion West Ukraine 2026',
       'Category': ticketType,
       'Full Name': name,
       'Phone': phone,
@@ -61,14 +59,13 @@ module.exports = async function handler(req, res) {
     await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL,
       to: email,
-      subject: 'Your Fashion West Ticket',
+      subject: 'Ваш квиток Fashion West Ukraine 2026',
       html: `
-        <p>Hello ${name},</p>
-        <p>Thank you for your purchase! Your ticket for <strong>${ticketType}</strong> is attached as a QR code.</p>
-        <p>Please present this QR code at the entrance on the day of the event.</p>
-        <p>Ticket code: <strong>${ticketCode}</strong></p>
-        <br/>
-        <p>Fashion West</p>
+        <p>Вітаємо, ${name}!</p>
+        <p>Ваш квиток категорії <strong>${ticketType}</strong> підтверджено.</p>
+        <p>Код квитка: <strong>${ticketCode}</strong></p>
+        <p>Пред'явіть QR-код на вході у день події.</p>
+        <p>До зустрічі 2 травня в Darlin', Мукачево!</p>
       `,
       attachments: [
         {

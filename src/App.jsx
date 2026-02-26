@@ -6,6 +6,7 @@ import Checkout from './pages/Checkout';
 import Payment from './pages/Payment';
 import Success from './pages/Success';
 import AdminScan from './pages/AdminScan';
+import NotFound from './pages/NotFound';
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
         <Route path="/payment" element={<Payment />} />
         <Route path="/success" element={<Success />} />
         <Route path="/admin" element={<AdminScan />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Analytics />
       <SpeedInsights />
