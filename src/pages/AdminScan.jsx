@@ -96,15 +96,15 @@ export default function AdminScan() {
 
     switch (result.status) {
       case 'success':
-        return { color: 'text-white', label: 'ENTRY ALLOWED', detail: `${result.name} / ${result.category}` };
+        return { color: 'text-white', label: 'ВХІД ДОЗВОЛЕНО', detail: `${result.name} / ${result.category}` };
       case 'already_used':
-        return { color: 'text-beige', label: 'ALREADY USED', detail: `at ${result.time}` };
+        return { color: 'text-beige', label: 'ВЖЕ ВИКОРИСТАНО', detail: `о ${result.time}` };
       case 'not_paid':
-        return { color: 'text-burgundy', label: 'NOT PAID', detail: 'Ticket not paid' };
+        return { color: 'text-burgundy', label: 'НЕ ОПЛАЧЕНО', detail: 'Квиток не оплачено' };
       case 'not_found':
-        return { color: 'text-burgundy', label: 'NOT FOUND', detail: 'Ticket does not exist' };
+        return { color: 'text-burgundy', label: 'НЕ ЗНАЙДЕНО', detail: 'Квиток не існує' };
       default:
-        return { color: 'text-burgundy', label: 'ERROR', detail: 'Try again' };
+        return { color: 'text-burgundy', label: 'ПОМИЛКА', detail: 'Спробуйте ще раз' };
     }
   };
 
@@ -115,12 +115,12 @@ export default function AdminScan() {
       <main className="min-h-screen bg-forest flex items-center justify-center px-6">
         <div className="w-full max-w-xs text-center">
           <h1 className="font-heading uppercase tracking-[0.2em] text-white text-2xl mb-10">
-            Admin Access
+            Доступ
           </h1>
           <form onSubmit={handleUnlock} className="flex flex-col gap-6">
             <input
               type="password"
-              placeholder="Password"
+              placeholder="Пароль"
               value={password}
               onChange={(e) => { setPassword(e.target.value); setPasswordError(false); }}
               className="w-full border-b border-white/40 bg-transparent py-3 text-sm font-body text-white placeholder-white/40 focus:outline-none focus:border-white transition-colors text-center tracking-widest"
@@ -128,14 +128,14 @@ export default function AdminScan() {
             />
             {passwordError && (
               <p className="font-body text-burgundy text-xs uppercase tracking-widest">
-                Incorrect password
+                Невірний пароль
               </p>
             )}
             <button
               type="submit"
               className="bg-white text-forest uppercase tracking-widest text-xs px-8 py-3 hover:bg-beige transition-colors duration-300"
             >
-              Enter
+              Увійти
             </button>
           </form>
         </div>
@@ -146,7 +146,7 @@ export default function AdminScan() {
   return (
     <main className="min-h-screen bg-forest flex flex-col items-center justify-center px-6 py-12">
       <h1 className="font-heading uppercase tracking-[0.2em] text-white text-xl mb-6">
-        Ticket Scanner
+        Сканер квитків
       </h1>
 
       {/* Stats */}
@@ -154,17 +154,17 @@ export default function AdminScan() {
         <div className="flex gap-8 mb-8 border border-white/10 px-8 py-4">
           <div className="text-center">
             <p className="font-heading text-white text-3xl">{stats.checkedIn}</p>
-            <p className="font-body text-white/40 text-xs uppercase tracking-widest mt-1">Entered</p>
+            <p className="font-body text-white/40 text-xs uppercase tracking-widest mt-1">Увійшли</p>
           </div>
           <div className="w-px bg-white/10" />
           <div className="text-center">
             <p className="font-heading text-white text-3xl">{stats.remaining}</p>
-            <p className="font-body text-white/40 text-xs uppercase tracking-widest mt-1">Remaining</p>
+            <p className="font-body text-white/40 text-xs uppercase tracking-widest mt-1">Очікується</p>
           </div>
           <div className="w-px bg-white/10" />
           <div className="text-center">
             <p className="font-heading text-white text-3xl">{stats.total}</p>
-            <p className="font-body text-white/40 text-xs uppercase tracking-widest mt-1">Total Sold</p>
+            <p className="font-body text-white/40 text-xs uppercase tracking-widest mt-1">Продано</p>
           </div>
         </div>
       )}
@@ -177,7 +177,7 @@ export default function AdminScan() {
 
       {!result && (
         <p className="font-body text-white/40 text-xs uppercase tracking-widest mt-6">
-          Point camera at QR code
+          Наведіть камеру на QR-код
         </p>
       )}
 
