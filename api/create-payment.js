@@ -95,7 +95,7 @@ module.exports = async function handler(req, res) {
     clientEmail: email,
     clientPhone: phone,
     serviceUrl: `https://${merchantDomainName}/api/wayforpay-webhook`,
-    returnUrl: `https://${merchantDomainName}/success`,
+    returnUrl: `https://${merchantDomainName}/api/success`,
     merchantSignature,
     language: 'UA',
   });
