@@ -1,4 +1,4 @@
-const qs = require('querystring');
+const busboy = require('busboy');
 const QRCode = require('qrcode');
 const generate = require('nanoid/generate');
 const { Resend } = require('resend');
@@ -18,16 +18,29 @@ async function getSheet() {
 }
 
 function parseBody(req) {
-  return new Promise((resolve) => {
-    if (req.body && typeof req.body === 'object') {
+  return new Promise((resolve, reject) => {
+    if (req.body && typeof req.body === 'object' && !Buffer.isBuffer(req.body)) {
       return resolve(req.body);
     }
-    if (req.body && typeof req.body === 'string') {
-      return resolve(qs.parse(req.body));
+
+    const contentType = req.headers['content-type'] || '';
+
+    if (contentType.includes('multipart/form-data')) {
+      const fields = {};
+      const bb = busboy({ headers: req.headers });
+      bb.on('field', (name, val) => { fields[name] = val; });
+      bb.on('close', () => resolve(fields));
+      bb.on('error', reject);
+      req.pipe(bb);
+      return;
     }
+
+    // fallback: application/x-www-form-urlencoded
+    const qs = require('querystring');
     let data = '';
     req.on('data', chunk => { data += chunk; });
     req.on('end', () => resolve(qs.parse(data)));
+    req.on('error', reject);
   });
 }
 
