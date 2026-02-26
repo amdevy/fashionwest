@@ -7,11 +7,11 @@ export default function AdminScan() {
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState(false);
 
-  const [scanning, setScanning] = useState(false);
   const [result, setResult] = useState(null);
   const [stats, setStats] = useState(null);
   const scannerRef = useRef(null);
   const html5QrCodeRef = useRef(null);
+  const scanningRef = useRef(false);
 
   const handleUnlock = (e) => {
     e.preventDefault();
@@ -53,7 +53,7 @@ export default function AdminScan() {
           { facingMode: 'environment' },
           { fps: 10, qrbox: { width: 250, height: 250 } },
           (decodedText) => {
-            if (scanning) return;
+            if (scanningRef.current) return;
             handleScan(decodedText);
           },
           () => {}
@@ -71,7 +71,7 @@ export default function AdminScan() {
   }, [unlocked]);
 
   const handleScan = async (code) => {
-    setScanning(true);
+    scanningRef.current = true;
     try {
       const res = await fetch('/api/verify-ticket', {
         method: 'POST',
@@ -87,7 +87,7 @@ export default function AdminScan() {
 
     setTimeout(() => {
       setResult(null);
-      setScanning(false);
+      scanningRef.current = false;
     }, 3000);
   };
 
