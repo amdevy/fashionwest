@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import Landing from './pages/Landing';
 import Checkout from './pages/Checkout';
 import Payment from './pages/Payment';
@@ -15,6 +17,8 @@ export default function App() {
         <Route path="/success" element={<Success />} />
         <Route path="/admin" element={<AdminScan />} />
       </Routes>
+      <Analytics />
+      <SpeedInsights />
     </BrowserRouter>
   );
 }
