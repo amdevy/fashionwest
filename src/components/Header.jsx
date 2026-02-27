@@ -1,5 +1,25 @@
 import { useState, useEffect } from 'react';
 
+function InstagramIcon() {
+  return (
+    <svg
+      width='17'
+      height='17'
+      viewBox='0 0 24 24'
+      fill='none'
+      stroke='currentColor'
+      strokeWidth='1.5'
+      strokeLinecap='round'
+      strokeLinejoin='round'
+      aria-hidden='true'
+    >
+      <rect x='2' y='2' width='20' height='20' rx='5' />
+      <circle cx='12' cy='12' r='4.5' />
+      <circle cx='17.5' cy='6.5' r='1' fill='currentColor' stroke='none' />
+    </svg>
+  );
+}
+
 const NAV_LINKS = [
   { label: 'Програма', href: '#program' },
   { label: 'Спікери', href: '#speakers' },
@@ -34,30 +54,39 @@ export default function Header() {
             : 'bg-transparent'
         }`}
       >
-        <div className="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
+        <div className='max-w-6xl mx-auto px-6 flex items-center justify-between h-16'>
           {/* Logo */}
           <a
-            href="#"
-            className="font-heading uppercase tracking-[0.15em] text-2xl text-forest"
+            href='#'
+            className='font-heading uppercase tracking-[0.15em] text-xl text-forest'
             onClick={close}
           >
             Fashion West Ukraine
           </a>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className='hidden md:flex items-center gap-8'>
             {NAV_LINKS.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="font-body text-sage text-xs uppercase tracking-widest hover:text-forest transition-colors duration-200"
+                className='font-body text-sage text-xs uppercase tracking-widest hover:text-forest transition-colors duration-200'
               >
                 {link.label}
               </a>
             ))}
             <a
-              href="#tickets"
-              className="bg-burgundy text-off-white font-body uppercase tracking-widest text-xs px-5 py-2 hover:bg-forest transition-colors duration-300"
+              href='https://www.instagram.com/fw.ukraine'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='text-sage hover:text-forest transition-colors duration-200'
+              aria-label='Instagram'
+            >
+              <InstagramIcon />
+            </a>
+            <a
+              href='#tickets'
+              className='bg-burgundy text-off-white font-body uppercase tracking-widest text-xs px-5 py-2 hover:bg-forest transition-colors duration-300'
             >
               Придбати квиток
             </a>
@@ -65,7 +94,7 @@ export default function Header() {
 
           {/* Hamburger button — mobile only */}
           <button
-            className="md:hidden flex flex-col justify-center gap-1.5 w-8 h-8 focus:outline-none"
+            className='md:hidden flex flex-col justify-center gap-1.5 w-8 h-8 focus:outline-none'
             onClick={() => setIsOpen((v) => !v)}
             aria-label={isOpen ? 'Закрити меню' : 'Відкрити меню'}
           >
@@ -91,7 +120,9 @@ export default function Header() {
       {/* Mobile overlay */}
       <div
         className={`fixed inset-0 bg-[#f5f5f4] z-40 flex flex-col items-center justify-center gap-10 md:hidden transition-opacity duration-300 ${
-          isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          isOpen
+            ? 'opacity-100 pointer-events-auto'
+            : 'opacity-0 pointer-events-none'
         }`}
       >
         {NAV_LINKS.map((link) => (
@@ -99,17 +130,26 @@ export default function Header() {
             key={link.href}
             href={link.href}
             onClick={close}
-            className="font-heading uppercase tracking-[0.2em] text-2xl text-forest hover:text-burgundy transition-colors duration-200"
+            className='font-heading uppercase tracking-[0.2em] text-2xl text-forest hover:text-burgundy transition-colors duration-200'
           >
             {link.label}
           </a>
         ))}
         <a
-          href="#tickets"
+          href='#tickets'
           onClick={close}
-          className="mt-4 bg-burgundy text-off-white font-body uppercase tracking-widest text-xs px-8 py-3 hover:bg-forest transition-colors duration-300"
+          className='mt-4 bg-burgundy text-off-white font-body uppercase tracking-widest text-xs px-8 py-3 hover:bg-forest transition-colors duration-300'
         >
           Придбати квиток
+        </a>
+        <a
+          href='https://www.instagram.com/fw.ukraine'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='text-sage hover:text-forest transition-colors duration-200 mt-2'
+          aria-label='Instagram'
+        >
+          <InstagramIcon />
         </a>
       </div>
     </>

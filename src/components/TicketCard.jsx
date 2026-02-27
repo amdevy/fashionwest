@@ -1,6 +1,6 @@
 export default function TicketCard({ type, title, price, description, features, onBuy }) {
   return (
-    <div className="bg-white border border-[#d9d9d9] p-8 flex flex-col gap-4 hover:border-[#6b3b40] transition-colors duration-300">
+    <div className="bg-white border border-[#d9d9d9] p-8 flex flex-col gap-4 hover:border-[#6b3b40] hover:-translate-y-1 hover:shadow-md transition-all duration-300">
       <div>
         <p className="font-body text-sage text-xs uppercase tracking-widest mb-2">
           {type}

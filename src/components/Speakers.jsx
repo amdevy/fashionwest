@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const SPEAKERS = [
   {
@@ -73,10 +73,25 @@ function SpeakerCard({ name, role, description, photo }) {
 }
 
 export default function Speakers() {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const reveals = sectionRef.current?.querySelectorAll('.reveal');
+    if (!reveals?.length) return;
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('in-view'); observer.unobserve(e.target); }
+      }),
+      { threshold: 0.1 }
+    );
+    reveals.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="speakers" className="bg-off-white px-6 py-24">
+    <section id="speakers" className="bg-off-white px-6 py-24" ref={sectionRef}>
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 reveal">
           <h2 className="font-heading uppercase tracking-[0.2em] text-forest text-3xl md:text-4xl">
             Спікери
           </h2>
@@ -84,8 +99,14 @@ export default function Speakers() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {SPEAKERS.map((speaker) => (
-            <SpeakerCard key={speaker.id} {...speaker} />
+          {SPEAKERS.map((speaker, i) => (
+            <div
+              key={speaker.id}
+              className="reveal"
+              style={{ transitionDelay: `${i * 120}ms` }}
+            >
+              <SpeakerCard {...speaker} />
+            </div>
           ))}
         </div>
       </div>
