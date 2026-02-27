@@ -58,7 +58,7 @@ export default function Header() {
           {/* Logo */}
           <a
             href='#'
-            className='font-heading uppercase tracking-[0.15em] text-2xl text-forest'
+            className='font-heading uppercase tracking-[0.15em] text-xl text-forest'
             onClick={close}
           >
             Fashion West Ukraine
