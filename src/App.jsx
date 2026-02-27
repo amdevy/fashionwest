@@ -7,10 +7,12 @@ import Payment from './pages/Payment';
 import Success from './pages/Success';
 import AdminScan from './pages/AdminScan';
 import NotFound from './pages/NotFound';
+import Intro from './components/Intro';
 
 export default function App() {
   return (
     <BrowserRouter>
+      <Intro />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/checkout/:ticketType" element={<Checkout />} />
