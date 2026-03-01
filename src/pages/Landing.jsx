@@ -73,7 +73,7 @@ export default function Landing() {
 
       <Speakers />
 
-      <section id="tickets" className="bg-off-white px-6 py-24">
+      <section id="tickets" className="px-6 py-24 bg-[#f8f3ee]">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="font-heading uppercase tracking-[0.2em] text-forest text-3xl md:text-4xl">

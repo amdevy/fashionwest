@@ -28,14 +28,7 @@ const NAV_LINKS = [
 ];
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 80);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
@@ -48,11 +41,7 @@ export default function Header() {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? 'bg-[#f5f5f4]/95 backdrop-blur-sm border-b border-[#d9d9d9]'
-            : 'bg-transparent'
-        }`}
+        className='sticky top-0 z-50 bg-[#f8f3ee] border-b border-[#e8e3de]'
       >
         <div className='max-w-6xl mx-auto px-6 flex items-center justify-between h-16'>
           {/* Logo */}
@@ -119,7 +108,7 @@ export default function Header() {
 
       {/* Mobile overlay */}
       <div
-        className={`fixed inset-0 bg-[#f5f5f4] z-40 flex flex-col items-center justify-center gap-10 md:hidden transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-[#f8f3ee] z-40 flex flex-col items-center justify-center gap-10 md:hidden transition-opacity duration-300 ${
           isOpen
             ? 'opacity-100 pointer-events-auto'
             : 'opacity-0 pointer-events-none'
