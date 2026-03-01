@@ -15,7 +15,7 @@ const BLOCKS = [
 
 export default function AboutSection() {
   return (
-    <section id="about" className="bg-off-white px-6 py-24">
+    <section id="about" className="px-6 py-24 bg-[#f8f3ee]">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {BLOCKS.map((block) => (
