@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import HeroSection from '../components/HeroSection';
 import TicketCard from '../components/TicketCard';
@@ -12,7 +11,7 @@ const TICKETS = [
   {
     type: 'Standard',
     title: 'Standard Entry',
-    price: 1,
+    price: 2000,
     description:
       'Ідеальний формат, щоб стати частиною атмосфери події та побачити все на власні очі.',
     features: [
@@ -63,8 +62,6 @@ const TICKETS = [
 ];
 
 export default function Landing() {
-  const navigate = useNavigate();
-
   return (
     <main>
       <Header />
@@ -74,16 +71,16 @@ export default function Landing() {
 
       <Speakers />
 
-      <section id="tickets" className="px-6 py-24 bg-[#f8f3ee]">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="font-heading uppercase tracking-[0.2em] text-forest text-3xl md:text-4xl">
+      <section id='tickets' className='px-6 py-24 bg-[#f8f3ee]'>
+        <div className='max-w-6xl mx-auto'>
+          <div className='text-center mb-16'>
+            <h2 className='font-heading uppercase tracking-[0.2em] text-forest text-3xl md:text-4xl'>
               Квитки
             </h2>
-            <div className="w-12 h-px bg-sage mx-auto mt-6" />
+            <div className='w-12 h-px bg-sage mx-auto mt-6' />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-6'>
             {TICKETS.map((ticket) => (
               <TicketCard
                 key={ticket.type}
@@ -92,9 +89,19 @@ export default function Landing() {
                 price={ticket.price}
                 description={ticket.description}
                 features={ticket.features}
-                onBuy={() => navigate(`/checkout/${ticket.type.toLowerCase()}`)}
               />
             ))}
+          </div>
+
+          <div className='text-center mt-12'>
+            <a
+              href='https://mukachevo.karabas.com/fashion-west-ukraine-2026/'
+              target='_blank'
+              rel='noopener noreferrer'
+              className='inline-block bg-burgundy text-white font-body uppercase tracking-widest text-xs px-12 py-4 hover:bg-forest transition-colors duration-300'
+            >
+              Придбати квиток
+            </a>
           </div>
         </div>
       </section>
