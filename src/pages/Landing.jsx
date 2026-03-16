@@ -5,6 +5,7 @@ import TicketCard from '../components/TicketCard';
 import ProgramSection from '../components/ProgramSection';
 import Speakers from '../components/Speakers';
 import AboutSection from '../components/AboutSection';
+import PartnersSection from '../components/PartnersSection';
 import Footer from '../components/Footer';
 
 const TICKETS = [
@@ -99,6 +100,8 @@ export default function Landing() {
       </section>
 
       <AboutSection />
+
+      <PartnersSection />
 
       <Footer />
     </main>
