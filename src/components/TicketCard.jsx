@@ -1,4 +1,4 @@
-export default function TicketCard({ type, title, price, description, features, onBuy }) {
+export default function TicketCard({ type, title, price, description, features }) {
   return (
     <div className="bg-white border border-[#d9d9d9] p-8 flex flex-col gap-4 hover:border-[#6b3b40] hover:-translate-y-1 hover:shadow-md transition-all duration-300">
       <div>
@@ -31,12 +31,6 @@ export default function TicketCard({ type, title, price, description, features, 
         </ul>
       )}
 
-      <button
-        onClick={onBuy}
-        className="mt-auto bg-burgundy text-white uppercase tracking-widest text-xs px-8 py-3 hover:bg-forest transition-colors duration-300 w-full"
-      >
-        Придбати квиток
-      </button>
     </div>
   );
 }
