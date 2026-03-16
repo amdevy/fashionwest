@@ -23,7 +23,7 @@ export default function PartnersSection() {
           {PARTNERS.map((src, i) => (
             <div
               key={i}
-              className="w-40 h-24 flex items-center justify-center p-2 opacity-85 hover:opacity-100 transition-opacity duration-300"
+              className="w-40 h-24 flex items-center justify-center p-2 opacity-85 hover:opacity-100 hover:scale-110 transition-all duration-300 cursor-pointer"
             >
               <img
                 src={src}
