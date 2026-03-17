@@ -38,6 +38,18 @@ export default function Footer() {
       <p className='font-body text-beige/50 text-xs tracking-wider'>
         © {new Date().getFullYear()} Fashion West Ukraine. Всі права захищені.
       </p>
+
+      <p className='font-body text-beige/30 text-xs mt-3'>
+        Created by{' '}
+        <a
+          href='https://t.me/AndriiMatt'
+          target='_blank'
+          rel='noopener noreferrer'
+          className='hover:text-beige/60 transition-colors duration-200'
+        >
+          Andrii Matsiuk
+        </a>
+      </p>
     </footer>
   );
 }
