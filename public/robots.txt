@@ -1,3 +1,40 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /checkout
+Disallow: /payment
+Disallow: /success
+Disallow: /api/
+
+# AI crawlers — welcome
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
 Sitemap: https://www.fashionwestukraine.com/sitemap.xml

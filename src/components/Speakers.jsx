@@ -57,7 +57,11 @@ function SpeakerCard({ name, role, description, photo }) {
         ) : (
           <img
             src={photo}
-            alt={name}
+            alt={`${name} — спікер Fashion West Ukraine 2026`}
+            width='600'
+            height='600'
+            loading='lazy'
+            decoding='async'
             className='w-full h-full object-cover object-top'
             onError={() => setImgFailed(true)}
           />

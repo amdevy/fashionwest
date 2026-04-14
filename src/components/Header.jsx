@@ -46,9 +46,16 @@ export default function Header() {
         <div className='max-w-6xl mx-auto px-6 flex items-center justify-between h-16'>
           {/* Logo */}
           <a
-            href='#'
+            href='/'
             className='font-heading uppercase tracking-[0.15em] text-xl text-forest'
-            onClick={close}
+            onClick={(e) => {
+              if (window.location.pathname === '/') {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+              close();
+            }}
+            aria-label='Fashion West Ukraine — На головну'
           >
             Fashion West Ukraine
           </a>
