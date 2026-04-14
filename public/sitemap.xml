@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.fashionwestukraine.com/</loc>
-    <lastmod>2026-03-01</lastmod>
+    <lastmod>2026-04-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.fashionwestukraine.com/og-image.jpg</image:loc>
+      <image:title>Fashion West Ukraine 2026 — Тиждень моди в Мукачеві</image:title>
+      <image:caption>Fashion West Ukraine 2026. 2 травня 2026, Darlin', Мукачево.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.fashionwestukraine.com/speakers/moskin-bilous.jpg</image:loc>
+      <image:title>Андрій Моськін та Андреас Білоус — Andreas Moskin</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.fashionwestukraine.com/speakers/ovcharenko.jpg</image:loc>
+      <image:title>Анна Овчаренко — спікер Fashion West Ukraine 2026</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.fashionwestukraine.com/speakers/vasil.jpg</image:loc>
+      <image:title>Василь Ябрик — YMG Group, спікер Fashion West Ukraine</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.fashionwestukraine.com/speakers/bogush.jpg</image:loc>
+      <image:title>Людмила Богуш — BogushTime, спікер Fashion West Ukraine</image:title>
+    </image:image>
   </url>
 </urlset>

@@ -2,7 +2,18 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD;
 
+function useNoIndex() {
+  useEffect(() => {
+    const tag = document.createElement('meta');
+    tag.name = 'robots';
+    tag.content = 'noindex, nofollow';
+    document.head.appendChild(tag);
+    return () => { document.head.removeChild(tag); };
+  }, []);
+}
+
 export default function AdminScan() {
+  useNoIndex();
   const [unlocked, setUnlocked] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState(false);
