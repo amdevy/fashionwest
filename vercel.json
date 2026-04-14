@@ -1,6 +1,14 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "fashionwestukraine.com" }],
+      "destination": "https://www.fashionwestukraine.com/$1",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     { "source": "/", "destination": "/index.html" },
     { "source": "/checkout/:ticketType", "destination": "/index.html" },
